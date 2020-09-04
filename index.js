@@ -20,5 +20,5 @@ app.use("/category", categoryRouter);
 app.use("/history", historyRouter);
 
 app.listen(env.port, () => {
-  console.log(`Server started on port : ${env.port}`);
+   console.log(`Server started on port : ${env.port}`);
 });

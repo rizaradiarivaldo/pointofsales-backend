@@ -2,10 +2,9 @@ const db = require("../configs/db");
 const fs = require('fs')
 
 const product = {
-   getAll: (nama, sortby, typesort, limit, offset) => {
+   getAll: (name, sort, typesort, limit, offset) => {
       return new Promise((resolve, reject) => {
-         const query = `SELECT products.id_product,products.productname,products.image,products.price,category.category FROM products LEFT JOIN category on products.id_category=category.id_category WHERE productname LIKE '%${nama}%' ORDER BY ${sortby} ${typesort}
-       LIMIT ${limit} OFFSET ${offset} `;
+         const query = `SELECT products.id_product,products.productname,products.image,products.price,category.category, (SELECT COUNT(*) FROM products) as count FROM products LEFT JOIN category on products.id_category=category.id_category WHERE productname LIKE '%${name}%' ORDER BY ${sort} ${typesort} LIMIT ${limit} OFFSET ${offset} `;
          db.query(query, (err, result) => {
             if (err) {
                reject(new Error(err));
