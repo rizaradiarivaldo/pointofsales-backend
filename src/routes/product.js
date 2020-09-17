@@ -14,7 +14,7 @@ router
 
   .post("/insert", authentification, authorization, productController.insert)
 
-  .put("/update/:id", upload.single("image"), productController.update)
+  .put("/update/:id", authentification, authorization, upload.single("image"), productController.update)
 
   .patch("/updatepatch/:id", authentification, authorization, productController.updatePatch)
 

@@ -32,7 +32,6 @@ const product = {
       });
 
     //getRedis 
-
     productModel.getAllData()
       .then((results) => {
         redisClient.set('products', JSON.stringify(results))
@@ -56,7 +55,11 @@ const product = {
   insert: (req, res) => {
     upload.single("image")(req, res, (err) => {
       if (err) {
-        failed(res, [], err);
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          failed(res, [], 'File too large, Please select image less from 2mb');
+        } else {
+          failed(res, [], err.message)
+        }
       } else {
         const body = req.body;
         body.image = req.file.filename;
