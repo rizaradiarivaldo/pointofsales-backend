@@ -1,23 +1,18 @@
-const categoryModel = require("../models/category");
+const historyModel = require("../models/history");
 const response = require("../helpers/response");
 
-const redis = require("redis");
-const redisClient = redis.createClient();
-
-const category = {
-  getall: (req, res) => {
-    const name = !req.query.name ? "" : req.query.name;
-    const sort = !req.query.sort ? "id_category" : req.query.sort;
+const history = {
+  getAll: (req, res) => {
+    const sort = !req.query.sort ? "id" : req.query.sort;
     const typesort = !req.query.typesort ? "ASC" : req.query.typesort;
 
-    const limit = !req.query.limit ? 5 : req.query.limit;
-    const page = !req.query.page ? 1 : req.query.page;
-    const offset = page <= 1 ? "0" : (page - 1) * limit;
+    const limit = !req.query.limit ? 5 : parseInt(req.query.limit);
+    const page = !req.query.page ? 1 : parseInt(req.query.page);
+    const offset = page <= 1 ? 0 : (page - 1) * limit;
 
-    categoryModel
-      .getall(name, sort, typesort, limit, offset)
+    historyModel
+      .getAll(sort, typesort, limit, offset)
       .then((result) => {
-        redisClient.set("category", JSON.stringify(result));
         const totalRows = result[0].count;
         const meta = {
           total: totalRows,
@@ -31,12 +26,12 @@ const category = {
       });
   },
 
-  getdetail: (req, res) => {
+  getDetail: (req, res) => {
     const id = req.params.id;
-    categoryModel
-      .getdetail(id)
+    historyModel
+      .getDetail(id)
       .then((result) => {
-        response.success(res, result, `Get all data success`);
+        response.success(res, result, "Get all data success");
       })
       .catch((err) => {
         response.failed(res, [], err.message);
@@ -44,39 +39,50 @@ const category = {
   },
 
   insert: (req, res) => {
-    const body = req.body;
-    categoryModel
-      .insert(body)
+    const data = req.body;
+    // console.log(body);
+    historyModel
+      .insert(data)
       .then((result) => {
-        redisClient.del("category")
         response.success(res, result, `Insert data success`);
       })
       .catch((err) => {
         response.failed(res, [], err.message);
       });
   },
+
   update: (req, res) => {
     const id = req.params.id;
     const body = req.body;
-
-    categoryModel
+    historyModel
       .update(body, id)
       .then((result) => {
-        redisClient.del("category")
-        response.success(res, result, `Update data success`);
+        response.success(res, result, `Update id: ${id} success`);
       })
       .catch((err) => {
         response.failed(res, [], err.message);
       });
   },
 
+  updatePatch: (req, res) => {
+    const id = req.params.id;
+    const body = req.body;
+    productModel
+      .updatePatch(body, id)
+      .then((result) => {
+        success(res, result, `Update id: ${id} success`);
+      })
+      .catch((err) => {
+        failed(res, [], err.message);
+      });
+  },
+
   delete: (req, res) => {
     const id = req.params.id;
-    categoryModel
+    historyModel
       .delete(id)
       .then((result) => {
-        redisClient.del("category")
-        response.success(res, result, `Delete data success`);
+        response.success(res, result, `Delete id ${id} success`);
       })
       .catch((err) => {
         response.failed(res, [], err.message);
@@ -84,4 +90,4 @@ const category = {
   },
 };
 
-module.exports = category;
+module.exports = history;
