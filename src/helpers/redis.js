@@ -19,10 +19,10 @@ module.exports = {
         const start = (page - 1) * limit
         const offset = page * limit
 
-        const sorting = _.orderBy(data, [sort], [typesort])
+        const sorting = _.orderBy(data, [sort.toLowerCase()], [typesort.toLowerCase()])
         let results = sorting
         if (name !== null) {
-          const searching = sorting.filter(e => e.productname.toLowerCase().includes(name.toLowerCase()))
+          const searching = results.filter(e => e.productname.toLowerCase().includes(name.toLowerCase()))
           results = searching
         }
         const meta = {
@@ -80,14 +80,4 @@ module.exports = {
       }
     })
   },
-
-  // getProducts: (req, res, next) => {
-  //   redisClient.get('products', (err, reply) => {
-  //     if (reply) {
-  //       successWithMeta(res, JSON.parse(reply), null, 'Get all data from redis success :)')
-  //     } else {
-  //       next()
-  //     }
-  //   })
-  // }
 }

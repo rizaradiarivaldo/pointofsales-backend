@@ -3,10 +3,10 @@ const { success, successWithMeta, failed } = require("../helpers/response");
 
 const history = {
   getAll: (req, res) => {
-    const sort = !req.query.sort ? "id" : req.query.sort;
+    const sort = !req.query.sort ? "id_product" : req.query.sort;
     const typesort = !req.query.typesort ? "ASC" : req.query.typesort;
 
-    const limit = !req.query.limit ? 5 : parseInt(req.query.limit);
+    const limit = !req.query.limit ? 10 : parseInt(req.query.limit);
     const page = !req.query.page ? 1 : parseInt(req.query.page);
     const offset = page <= 1 ? 0 : (page - 1) * limit;
 

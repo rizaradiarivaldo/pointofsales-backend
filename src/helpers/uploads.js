@@ -13,10 +13,10 @@ const upload = multer({
   storage: storage,
   limits: { fileSize: 2000000 },
   fileFilter(req, file, cb) {
-    if (file.originalname.match(/\.(jpg|jpeg)\b/)) {
+    if (file.originalname.match(/\.(jpg|jpeg|png)\b/)) {
       cb(null, true)
     } else {
-      cb('Image type must jpg or jpeg', null)
+      cb('Image type must jpg, jpeg or png', null)
     }
   },
 });
