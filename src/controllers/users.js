@@ -110,6 +110,20 @@ const users = {
         failed(res, [], 'Delete Failed!')
       });
   },
+
+  logout: (req, res) => {
+    try {
+      const id = req.params.id
+      usersModel.logout(id)
+        .then((result) => {
+          success(res, result, 'Logout Success')
+        }).catch((err) => {
+          failed(res, [], err.message)
+        });
+    } catch (err) {
+      failed(res, [], 'Error Internal Server')
+    }
+  }
 }
 
 const newToken = (email) => {
