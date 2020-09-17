@@ -16,7 +16,7 @@ const history = {
 
   getDetail: (id) => {
     return new Promise((resolve, reject) => {
-      const query = `SELECT * FROM history WHERE id='${id}'`;
+      const query = `SELECT * FROM history WHERE id_history='${id}'`;
       db.query(query, (err, result) => {
         if (err) {
           reject(new Error(err));
@@ -56,7 +56,7 @@ const history = {
 
   update: (data, id) => {
     return new Promise((resolve, reject) => {
-      const query = `UPDATE history SET invoices='${data.invoices}',cashier='${data.cashier}', date='${data.date}',orders='${data.orders}',amount='${data.amount}' WHERE invoices='${id}'`;
+      const query = `UPDATE history SET invoices='${data.invoices}',cashier='${data.cashier}', amount='${data.amount}' WHERE id_history='${id}'`;
       db.query(query, (err, result) => {
         if (err) {
           reject(new Error(err));

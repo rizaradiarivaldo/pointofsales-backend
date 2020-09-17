@@ -3,7 +3,7 @@ const { success, successWithMeta, failed } = require("../helpers/response");
 
 const history = {
   getAll: (req, res) => {
-    const sort = !req.query.sort ? "id_product" : req.query.sort;
+    const sort = !req.query.sort ? "id_history" : req.query.sort;
     const typesort = !req.query.typesort ? "ASC" : req.query.typesort;
 
     const limit = !req.query.limit ? 10 : parseInt(req.query.limit);
