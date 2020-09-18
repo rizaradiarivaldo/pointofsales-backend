@@ -3,15 +3,26 @@ const db = require("../configs/db");
 const users = {
   register: (data) => {
     return new Promise((resolve, reject) => {
-      db.query(`INSERT INTO users SET ? `, [data], (err, result) => {
+      db.query(`INSERT INTO users (email,password,level,is_active) VALUES ('${data.email}','${data.password}', 2,0)`, (err, result) => {
         if (err) {
           reject(new Error(err));
         } else {
           resolve(result);
-
         }
       });
     });
+  },
+
+  activation: (email) => {
+    return new Promise((resolve, reject) => {
+      db.query(`UPDATE users SET is_active=1 WHERE email='${email}'`, (err, res) => {
+        if (err) {
+          reject(new Error(err))
+        } else {
+          resolve(res)
+        }
+      })
+    })
   },
 
   login: (data) => {
@@ -62,7 +73,7 @@ const users = {
       })
     })
   },
-  
+
   renewToken: (token, id) => {
     return new Promise((resolve, reject) => {
       db.query(`UPDATE users SET refreshtoken='${token}' WHERE id='${id}'`, (err, result) => {

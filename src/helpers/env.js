@@ -6,10 +6,11 @@ const env = {
   user: process.env.DB_USER,
   // password: process.env.DD_PASS
   database: process.env.DB_NAME,
-
   PRIVATEKEY: process.env.PRIVATEKEY,
+  REFRESHTOKEN: process.env.REFRESHTOKEN,
+  EMAIL: process.env.EMAIL,
+  PASSWORD_EMAIL: process.env.PASSWORD_EMAIL
 
-  REFRESHTOKEN: process.env.REFRESHTOKEN
 };
 
 module.exports = env;

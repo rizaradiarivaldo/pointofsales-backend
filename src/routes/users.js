@@ -6,6 +6,8 @@ const router = express.Router();
 
 router.post("/register", usersController.register);
 
+router.get("/active/:token", usersController.active);
+
 router.put('/update/:id', usersController.update);
 
 router.delete('/delete/:id', usersController.delete);
