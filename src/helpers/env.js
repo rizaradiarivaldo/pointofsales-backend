@@ -9,7 +9,8 @@ const env = {
   PRIVATEKEY: process.env.PRIVATEKEY,
   REFRESHTOKEN: process.env.REFRESHTOKEN,
   EMAIL: process.env.EMAIL,
-  PASSWORD_EMAIL: process.env.PASSWORD_EMAIL
+  PASSWORD_EMAIL: process.env.PASSWORD_EMAIL,
+  PORT_AWS: process.env.PORT_AWS
 
 };
 

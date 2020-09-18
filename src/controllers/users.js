@@ -33,8 +33,10 @@ const users = {
 
           let emailRegister = `<div>
           <p>Follow link for activation</p>
-          <a href="http://18.207.247.9:3009/users/active/${response}"> GO </a>
+          <a href="${env.PORT_AWS}/users/active/${response}"> GO </a>
           </div>`
+
+          console.log(emailRegister)
           transporter.sendMail({
             // from: '"Fred Foo 👻" <foo@example.com>"', // sender address
             from: env.EMAIL,
