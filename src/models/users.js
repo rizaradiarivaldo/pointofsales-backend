@@ -13,6 +13,8 @@ const users = {
     });
   },
 
+
+
   activation: (email) => {
     return new Promise((resolve, reject) => {
       db.query(`UPDATE users SET is_active=1 WHERE email='${email}'`, (err, res) => {

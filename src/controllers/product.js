@@ -36,7 +36,7 @@ const product = {
       .then((results) => {
         redisClient.set('products', JSON.stringify(results))
       }).catch((err) => {
-
+        failed(result)
       });
   },
 

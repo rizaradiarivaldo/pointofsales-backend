@@ -36,7 +36,6 @@ const users = {
           <a href="${env.PORT_AWS}/users/active/${response}"> GO </a>
           </div>`
 
-          console.log(emailRegister)
           transporter.sendMail({
             // from: '"Fred Foo 👻" <foo@example.com>"', // sender address
             from: env.EMAIL,
@@ -52,7 +51,7 @@ const users = {
     usersModel
       .register(data)
       .then((result) => {
-        success(res, result, "Register success");
+        success(res, result, "Check your email, please verification");
         // console.log(result)
       })
       .catch((err) => {
