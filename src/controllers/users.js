@@ -143,7 +143,7 @@ const users = {
       failed(res, [], 'Token must have a value!')
     } else {
       jwt.verify(tokenReq, REFRESHTOKEN, (err, result) => {
-        const newtoken = newToken({ email: result.email })
+        const newtoken = newToken({ email: result.email, level: result.level })
         res.json({ newtoken: newtoken })
         // console.log(newtoken)
       })
