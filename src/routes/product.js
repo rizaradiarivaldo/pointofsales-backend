@@ -9,7 +9,7 @@ const { getProduct, getDetailProduct } = require('../helpers/redis')
 const router = express.Router();
 
 router
-  .get("/getall", authentification, authorization, getProduct, productController.getAll)
+  .get("/getall", productController.getAll)
   .get("/getdetail/:id", authentification, authorization, getDetailProduct, productController.getDetail)
 
   .post("/insert", authentification, authorization, admin, productController.insert)
