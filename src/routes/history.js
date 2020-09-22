@@ -2,7 +2,7 @@ const express = require("express");
 const historyController = require("../controllers/history");
 const router = express.Router();
 
-const { authentification, admin, authorization } = require('../helpers/auth')
+const { authentification, authorization } = require('../helpers/auth')
 router
   .get("/getall", authentification, authorization, historyController.getAll)
   .get("/getdetail/:id", authentification, authorization, historyController.getDetail)
