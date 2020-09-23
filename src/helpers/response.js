@@ -34,10 +34,10 @@ const response = {
     const result = {
       message: message,
       success: true,
-      code: 500,
+      code: 499,
       data: data,
     };
-    res.status(500);
+    res.status(499);
     res.json(result);
   },
   forbidden: (res, message) => {
