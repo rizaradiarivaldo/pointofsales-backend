@@ -55,7 +55,13 @@ const users = {
         // console.log(result)
       })
       .catch((err) => {
-        failed(res, [], err.message);
+        if (err) {
+          if (err.message === "Error: Duplicate entry 'rizaradiarivaldo@gmail.com' for key 'email'") {
+            failed(res, [], 'email already exist');
+          } else {
+            failed(res, [], err.message);
+          }
+        }
       });
   },
   active: (req, res) => {
@@ -88,49 +94,92 @@ const users = {
     usersModel
       .login(data)
       .then((result) => {
-        const results = result[0]
-        const id = results.id
-        if (!results) {
-          failed(res, [], 'Email not registered, Please register!')
+        if (result.length < 1) {
+          failed(res, [], 'Email not registered, Register please!')
         } else {
-          const password = results.password
-          //compareSync(data from request , data from database)
-          const isMatch = bcrypt.compareSync(data.password, password)
-          if (isMatch) {
-            if (results.is_active === 1) {
-              const userData = {
-                email: results.email,
-                level: results.level
-              }
-              const refreshToken = jwt.sign(userData, REFRESHTOKEN)
-              const token = newToken(userData)
-
-              if (results.refreshtoken === null) {
-                usersModel.renewToken(refreshToken, id)
-                  .then((response) => {
-                    console.log(response)
-                    const data = {
-                      token,
-                      refreshtoken: refreshToken
-                    }
-                    success(res, data, 'Token refresh success')
-                  }).catch((err) => {
-                    failed(res, [], err)
-                  });
-              } else {
-                const data = {
-                  token,
-                  refreshtoken: results.refreshtoken
+          const results = result[0]
+          const id = results.id
+            const password = results.password
+            //compareSync(data from request , data from database)
+            const isMatch = bcrypt.compareSync(data.password, password)
+            if (isMatch) {
+              if (results.is_active === 1) {
+                const userData = {
+                  email: results.email,
+                  level: results.level
                 }
-                success(res, data, 'Token success')
+                const refreshToken = jwt.sign(userData, REFRESHTOKEN)
+                const token = newToken(userData)
+
+                if (results.refreshtoken === null) {
+                  usersModel.renewToken(refreshToken, id)
+                    .then((response) => {
+                      console.log(response)
+                      const data = {
+                        token,
+                        refreshtoken: refreshToken
+                      }
+                      success(res, data, 'Token refresh success')
+                    }).catch((err) => {
+                      failed(res, [], err)
+                    });
+                } else {
+                  const data = {
+                    token,
+                    refreshtoken: results.refreshtoken
+                  }
+                  success(res, data, 'Token success')
+                }
+              } else {
+                failed(res, [], 'Activation needed!')
               }
             } else {
-              failed(res, [], 'Activation needed!')
+              failed(res, [], 'Password wrong, check again!')
             }
-          } else {
-            failed(res, [], 'Email or Password wrong, check again!')
-          }
         }
+        // const results = result[0]
+        // const id = results.id
+        // if (!results) {
+        //   failed(res, [], 'Email not registered, Please register!')
+        // } else {
+        //   const password = results.password
+        //   //compareSync(data from request , data from database)
+        //   const isMatch = bcrypt.compareSync(data.password, password)
+        //   if (isMatch) {
+        //     if (results.is_active === 1) {
+        //       const userData = {
+        //         email: results.email,
+        //         level: results.level
+        //       }
+        //       const refreshToken = jwt.sign(userData, REFRESHTOKEN)
+        //       const token = newToken(userData)
+
+        //       if (results.refreshtoken === null) {
+        //         usersModel.renewToken(refreshToken, id)
+        //           .then((response) => {
+        //             console.log(response)
+        //             const data = {
+        //               token,
+        //               refreshtoken: refreshToken
+        //             }
+        //             success(res, data, 'Token refresh success')
+        //           }).catch((err) => {
+        //             failed(res, [], err)
+        //           });
+        //       } else {
+        //         const data = {
+        //           token,
+        //           refreshtoken: results.refreshtoken
+        //         }
+        //         success(res, data, 'Token success')
+        //       }
+        //     } else {
+        //       failed(res, [], 'Activation needed!')
+        //     }
+        //   } else {
+        //     failed(res, [], 'Email or Password wrong, check again!')
+        //   }
+        // }
       })
       .catch((err) => {
         failed(res, [], err.message)

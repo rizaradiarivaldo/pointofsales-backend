@@ -13,7 +13,17 @@ const users = {
     });
   },
 
-
+  getDetailUser: (email) => {
+    return new Promise((resolve, reject) => {
+      db.query(`SELECT * users WHERE email='${data.email}'`, (err, result) => {
+        if (err) {
+          reject(new Error(err));
+        } else {
+          resolve(result);
+        }
+      });
+    });
+  },
 
   activation: (email) => {
     return new Promise((resolve, reject) => {

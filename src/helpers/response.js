@@ -6,7 +6,6 @@ const response = {
       code: 200,
       data: data,
     };
-    res.status(200);
     res.json(result);
   },
   successWithMeta: (res, data, meta, message) => {
@@ -17,7 +16,6 @@ const response = {
       meta,
       data,
     };
-    res.status(200);
     res.json(result);
   },
   failed: (res, data, message) => {
@@ -27,7 +25,6 @@ const response = {
       code: 500,
       data: data,
     };
-    res.status(500);
     res.json(result);
   },
   errToken: (res, data, message) => {
@@ -37,7 +34,6 @@ const response = {
       code: 499,
       data: data,
     };
-    res.status(499);
     res.json(result);
   },
   forbidden: (res, message) => {
@@ -46,7 +42,6 @@ const response = {
       success: false,
       code: 403,
     };
-    res.status(403);
     res.json(result);
   },
 };
